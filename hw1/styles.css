@@ -8,7 +8,7 @@ body {
     height: 100vh;
     font: 0.8vw 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: #202124;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .meet_root {
@@ -64,13 +64,31 @@ body {
 
 .centerBar {
     width: 8.8vw;
-    height: 2.5vw;
+    height: 2.3vw;
+    background: #3C4043;
+    border-radius: 20%/ 70%;
     position: absolute;
-    opacity: 0.1;
+    opacity: 0.3;
+
+    display: flex;
+    justify-content: center;
 }
 
 .centerBar:hover {
-    opacity: 1.0;
+    opacity: 0.8;
+}
+
+.center_icon {
+    width: 8.8vw;
+    height: 2.3vw;
+
+    display: flex;
+    align-self: center;
+    opacity: 0.3;
+}
+
+.center_icon:hover {
+    opacity: 0.8;
 }
 
 .main_name {
@@ -267,5 +285,5 @@ body {
     height: 90%;
     position: relative;
     bottom: 10%;
-    left: 5%;
+    left: 10%;
 }
