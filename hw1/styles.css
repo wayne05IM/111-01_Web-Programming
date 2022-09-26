@@ -44,7 +44,7 @@ body {
 
 .meet_mainCircle {
     width: 10.5vw;
-    height: 19vh;
+    height: 10.5vw;
     background: #33691D;
     margin: 15px;
     border-radius: 50%;
@@ -177,8 +177,8 @@ body {
 }
 
 .meet_rightCircle {
-    width: 5vw;
-    height: 8vh;
+    width: 6vw;
+    height: 4.9vw;
     background: #C2175B;
     border-radius: 50%;
     position: relative;
@@ -221,7 +221,7 @@ body {
 
 #five .meet_rightCircle {
     width: 6vw;
-    height: 10vh;
+    height: 5.7vw;
     right: 20%;
 
     background: #C2175B;
