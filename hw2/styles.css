@@ -1,0 +1,312 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    font: 0.8vw 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #202124;
+    overflow: hidden;
+}
+
+.meet_root {
+    margin: 0 auto;
+    width: 100vw;
+    height: 100vh;
+    padding: 1em;
+    color: #FFFFFF;
+    font-weight: 300;
+}
+
+/* left */
+.meet_main {
+    width: 65%;
+    height: 90%;
+    float: left;
+    position: relative;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.meet_mainMute {
+    width: 2vw;
+    height: 1.9vw;
+    position: relative;
+    right: 1%;
+
+    display: flex;
+    align-self: flex-start;
+}
+
+.meet_mainCircle {
+    width: 10.5vw;
+    height: 10.5vw;
+    background: #33691D;
+    margin: 15px;
+    border-radius: 50%;
+    position: relative;
+    left: 5%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    align-self: center;
+}
+
+.mainCenterName {
+    font-size: 4.5vw;
+}
+
+.centerBar {
+    width: 8.8vw;
+    height: 2.3vw;
+    background: #3C4043;
+    border-radius: 20%/ 70%;
+    position: absolute;
+    opacity: 0.3;
+
+    display: flex;
+    justify-content: center;
+}
+
+.centerBar:hover {
+    opacity: 0.8;
+}
+
+.center_icon {
+    width: 8.8vw;
+    height: 2.3vw;
+
+    display: flex;
+    align-self: center;
+    opacity: 0.3;
+}
+
+.center_icon:hover {
+    opacity: 0.8;
+}
+
+.main_name {
+    width: 10%;
+    height: 4%;
+
+    display: flex;
+    align-self: flex-end;
+
+    position: absolute;
+    top: 97%;
+    left: 4%;
+}
+
+.meet_mainAnchor {
+    width: 2vw;
+    height: 1.9vw;
+    position: relative;
+    left: 0.5%;
+
+    display: flex;
+    align-self: flex-end;
+}
+
+/* right */
+.meet_right {
+    width: 35%;
+    height: 90%;
+    float: right;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.meet_rightBox {
+    width: 40%;
+    height: 25%;
+    background: #3C4043;
+    margin: 1%;
+    border-radius: 5%;
+    position: relative;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-content: space-between;
+}
+
+.centerName {
+    font-size: 2vw;
+}
+
+.meet_rightMute {
+    width: 2vw;
+    height: 1.9vw;
+    position: relative;
+    top: 3%;
+    right: 3%;
+
+    display: flex;
+    align-self: flex-start;
+}
+
+.meet_rightCircle {
+    width: 5vw;
+    height: 5vw;
+    background: #C2175B;
+    border-radius: 50%;
+    position: relative;
+    right: 10%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    align-self: center;
+}
+
+.centerBar_right {
+    width: 4.8vw;
+    height: 1.5vw;
+    background: #3C4043;
+    border-radius: 20%/ 70%;
+    position: absolute;
+    opacity: 0.3;
+
+    display: flex;
+    justify-content: center;
+}
+
+.centerBar_right:hover {
+    opacity: 0.8;
+}
+
+.center_icon_right {
+    width: 4.8vw;
+    height: 1.5vw;
+    position: relative;
+
+    display: flex;
+    align-self: center;
+    opacity: 0.3;
+}
+
+.center_icon_right:hover {
+    opacity: 0.8;
+}
+
+.delete {
+    width: 1.5vw;
+    height: 1.6vw;
+    top: 0.5vw;
+    right: 11.5vw;
+    position: absolute;
+
+    display: flex;
+    align-self: flex-start;
+}
+
+.bottomName {
+    width: 5vw;
+    height: 1.5%;
+    position: relative;
+    bottom: 10%;
+    left: 7%;
+    display: inline-block;
+
+    display: flex;
+    align-self: flex-end;
+}
+
+#one .meet_rightCircle {
+    background: #1d17c2;
+}
+
+#two .meet_rightCircle {
+    background: #33691D;
+}
+
+#three .meet_rightCircle {
+    background: #0097A7;
+}
+
+#four .meet_rightCircle {
+    background: #c2b117;
+}
+
+#five .meet_rightCircle {
+    background: #C2175B;
+}
+
+/* end */
+.meet_function {
+    width: 100%;
+    height: 10%;
+    float: inline-end;
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.meet_des {
+    width: 15%;
+    height: 50%;
+    font-size: 1vw;
+    position: relative;
+
+    top:10%;
+    left: 1%;
+}
+
+.center_button {
+    width: 30%;
+    height: 60%;
+    list-style-type: none;
+    position: relative;
+    left: 2%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    width: 3vw;
+    height: 3vw;
+    padding: 4%;
+}
+
+#red_phone {
+    width: 4vw;
+    height: 3vw;
+}
+
+.meet_info {
+    width: 20%;
+    height: 70%;
+}
+
+.info {
+    width: 80%;
+    height: 90%;
+    position: relative;
+    bottom: 10%;
+    left: 10%;
+}
