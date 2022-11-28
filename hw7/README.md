@@ -5,3 +5,5 @@ There should be
 (2) frontend folder  
 (3) package.json  
 Thank You! 
+  
+Note: Observed that some modules may be stored and named differently in different computers, please change the [ import "antd/dist/antd.css"; ] in "/frontend/src/index.js" to the correct direction in your own computer so that it works. Thank you!
