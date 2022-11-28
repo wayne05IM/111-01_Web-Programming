@@ -11,7 +11,7 @@ const ChatContext = createContext({
   messages: [],
   startChat: () => {},
   sendMessage: () => {},
-  clearMessages: () => {},
+  displayStatus: () => {},
 });
 
 const client = new WebSocket("ws://localhost:4000");
@@ -26,20 +26,16 @@ const ChatProvider = (props) => {
     const { data } = byteString;
     const [task, payload] = JSON.parse(data);
     switch (task) {
-      case "output": {
-        setMessages(() => [...messages, ...payload]);
+      case "CHAT": {
+        setMessages(payload);
+        break;
+      }
+      case "MESSAGE": {
+        setMessages(() => [...messages, payload]);
         break;
       }
       case "status": {
         setStatus(payload);
-        break;
-      }
-      case "init": {
-        setMessages(() => payload);
-        break;
-      }
-      case "cleared": {
-        setMessages([]);
         break;
       }
       default:
@@ -47,9 +43,7 @@ const ChatProvider = (props) => {
     }
   };
 
-  const startChat = ({name, to}) => {
-    console.log(name);
-    console.log(to);
+  const startChat = ( name, to ) => {
     if (!name || !to) throw new Error("Name or to required.");
 
     sendData({
@@ -58,9 +52,9 @@ const ChatProvider = (props) => {
     });
   };
 
-  const sendMessage = ({name, to, body}) => {
-    if (!name || !to || !body)
-      throw new Error("Name or to body required.");
+  const sendMessage = ( name, to, body ) => {
+    if (!name || !to || !body) throw new Error("Name or body to required.");
+
     sendData({
       type: "MESSAGE",
       payload: { name, to, body },
@@ -68,12 +62,7 @@ const ChatProvider = (props) => {
   };
 
   const sendData = async (data) => {
-    console.log(data);
     await client.send(JSON.stringify(data));
-  };
-
-  const clearMessages = () => {
-    sendData(["clear"]);
   };
 
   const displayStatus = (payload) => {
@@ -104,22 +93,22 @@ const ChatProvider = (props) => {
 
   return (
     <ChatContext.Provider
-    value = {{
-      status,
-      me,
-      signedIn,
-      messages,
-      setMe,
-      startChat,
-      sendMessage,
-      setSignedIn,
-      clearMessages,
-      displayStatus
-    }}
-    {...props}/>
+      value={{
+        status,
+        me,
+        signedIn,
+        messages,
+        setMe,
+        startChat,
+        sendMessage,
+        setSignedIn,
+        displayStatus,
+      }}
+      {...props}
+    />
   );
 };
 
 const useChat = () => useContext(ChatContext);
 
-export {ChatProvider, useChat};
+export { ChatProvider, useChat };

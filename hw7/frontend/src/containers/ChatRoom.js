@@ -16,6 +16,13 @@ const ChatBoxesWrapper = styled(Tabs)`
   overflow: auto;
 `;
 
+const ChatBoxWrapper = styled.div`
+  height: calc(240px - 36px);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+`;
+
 const FootRef = styled.div`
   height: 20px;
 `;
@@ -41,18 +48,33 @@ const ChatRoom = () => {
     setMsgSent(false);
   }, [msgSent]);
 
-  // useEffect(() => {
-  //   const updateChatBoxes = 
-  // }, [messages])
+  const updateChatBoxes = (index, children) => {
+    const newChatBoxes = chatBoxes.map((msg, i) => {
+      if (i === index) {
+        return { label: activeKey, key: activeKey, children: children };
+      } else {
+        return msg;
+      }
+    });
+    setChatBoxes(newChatBoxes);
+  };
+
+  useEffect(() => {
+    updateChatBoxes(
+      chatBoxes.findIndex((msg) => msg.key === activeKey),
+      renderChat(messages)
+    );
+    setMsgSent(true);
+  }, [messages]);
 
   const createChatBox = (friend) => {
     if (chatBoxes.some(({ key }) => key === friend)) {
       throw new Error(friend + "'s chat box has already opened.");
     }
-    const chat = extractChat(friend);
+    startChat(me, friend);
     setChatBoxes([
       ...chatBoxes,
-      { label: friend, children: chat, key: friend },
+      { label: friend, children: renderChat(messages), key: friend },
     ]);
     setMsgSent(true);
     return friend;
@@ -73,19 +95,20 @@ const ChatRoom = () => {
 
   const renderChat = (chat) => {
     return chat.length === 0 ? (
-      // Initial or when cleared
-      <p style={{ color: "#ccc" }}>No messages...</p>
+      <p style={{ color: "#ccc" }}> No messages... </p>
     ) : (
-      // Print each message {name, textBody}
-      chat.map(({ name, body }, i) => {
-        <Message isMe={name === me} message={body} key={i} />;
-      })
+      <ChatBoxWrapper>
+        {chat.map((item) => (
+          <Message isMe={item["name"] === me} message={item["body"]} />
+        ))}
+        <FootRef ref={msgFooter} />
+      </ChatBoxWrapper>
     );
-  }; // 產生 chat 的 DOM nodes
+  };
 
   const extractChat = (friend) => {
     return renderChat(
-      messages.filter(({ name, body }) => name === friend || name === me)
+      messages.filter((m) => m["name"] === friend || m["name"] === me)
     );
   };
 
@@ -99,12 +122,13 @@ const ChatRoom = () => {
           activeKey={activeKey}
           onChange={(key) => {
             setActiveKey(key);
-            extractChat(key);
+            startChat(me, key);
           }}
           onEdit={(targetKey, action) => {
             if (action === "add") setModalOpen(true);
             else if (action === "remove") {
               setActiveKey(removeChatBox(targetKey, activeKey));
+              // startChat(me, removeChatBox(targetKey, activeKey));
             }
           }}
           items={chatBoxes}
@@ -113,7 +137,7 @@ const ChatRoom = () => {
           open={modalOpen}
           onCreate={({ name }) => {
             setActiveKey(createChatBox(name));
-            startChat({me, key});
+            extractChat(name);
             setModalOpen(false);
           }}
           onCancel={() => {
@@ -142,9 +166,9 @@ const ChatRoom = () => {
             setMsg("");
             return;
           }
-          sendMessage({ name: me, to: activeKey, body: msg });
-          setMsg("");
+          sendMessage(me, activeKey, msg);
           setMsgSent(true);
+          setMsg("");
         }}
       />
     </>

@@ -5,7 +5,7 @@ import WebSocket from "ws";
 import { v4 as uuidv4 } from "uuid";
 
 import mongo from "./mongo.js";
-import {onMessage} from "./wsConnect";
+import wsConnect from "./wsConnect";
 
 mongo.connect();
 
@@ -17,8 +17,8 @@ const db = mongoose.connection;
 db.once("open", () => {
   wss.on("connection", (ws) => {
     ws.id = uuidv4();
-    ws.box = '';
-    ws.onmessage = onMessage(wss, ws);
+    ws.box = "";
+    ws.onmessage = wsConnect.onMessage(wss, ws);
   });
 
   const PORT = process.env.PORT || 4000;

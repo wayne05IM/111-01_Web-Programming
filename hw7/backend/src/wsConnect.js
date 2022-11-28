@@ -1,118 +1,141 @@
-// import Message from "./models/message.js";
-import { MessageModel, UserModel, ChatBoxModel } from "./models/chatbox";
+import { UserModel, MessageModel, ChatBoxModel } from "./models/chatbox";
 
 const makeName = (name, to) => {
   return [name, to].sort().join("_");
 };
-
-const validateUser = async (name, id) => {
+const validateUser = async (name) => {
   const existing = await UserModel.findOne({ name: name });
-  if (!existing)
-    existing = await new UserModel({ name: name, chatboxes: id }).save();
-  return existing;
+  if (!existing) return false;
+  else {
+    return existing;
+  }
 };
-
-const validateChatBox = async (name, participants) => {
-  const box = await ChatBoxModel.findOne({ name: name });
-  if (!box) box = await new ChatBoxModel({ name, users: participants }).save();
-  return box.populate(["users", { path: "messages", populate: "sender" }]);
+const validateBox = async (name) => {
+  const existing = await ChatBoxModel.findOne({ name: name });
+  if (!existing) return false;
+  else {
+    return existing;
+  }
 };
-
 const chatBoxes = {};
 
 const sendData = (data, ws) => {
   ws.send(JSON.stringify(data));
 };
-
 const sendStatus = (payload, ws) => {
   sendData(["status", payload], ws);
 };
 
-// Broadcast function
-// const broadcastMessage = (data, status, wss) => {
-//   wss.clients.forEach((client) => {
-//     sendData(data, client);
-//     sendStatus(status, client);
-//   });
-// };
-
-const onMessage = (wss, ws) => {
-  async (byteString) => {
-    console.log(byteString);
+export default {
+  onMessage: (wss, ws) => async (byteString) => {
     const { data } = byteString;
-    const [task, payload] = JSON.parse(data);
-    console.log(task);
+    const parseData = JSON.parse(data);
+    const task = parseData.type;
+    const payload = parseData.payload;
     switch (task) {
       case "CHAT": {
         const { name, to } = payload;
-        console.log(name, to);
         const chatBoxName = makeName(name, to);
         // 如果不曾有過 chatBoxName 的對話，將 chatBoxes[chatBoxName] 設定為 empty Set
         if (!chatBoxes[chatBoxName]) chatBoxes[chatBoxName] = new Set(); // make new record for chatbox
         // 將 ws client 加入 chatBoxes[chatBoxName]
-        chatBoxes[chatBoxName].add(ws); // add this open connection into chatbox
-        // Both user exist or not
+        chatBoxes[chatBoxName].add(ws);
+        // check if chat Box exist
+        let cBox = await validateBox(chatBoxName);
+        if (cBox === false) {
+          cBox = new ChatBoxModel({
+            name: chatBoxName,
+            messages: [],
+            users: [],
+          });
+        }
+        // check if to users exist
         let s = await validateUser(name);
         let r = await validateUser(to);
-        // Box exist or not
-        let cBox = await validateChatBox(chatBoxName, [s._id, dest._id]);
-        //
-        var mes = [];
+        if (s === false) {
+          s = new UserModel({
+            name: name,
+            chatboxes: cBox._id,
+          });
+          try {
+            await s.save();
+            console.log("save sender success");
+          } catch (e) {
+            throw new Error("DB save error: " + e);
+          }
+        }
+        if (r === false) {
+          r = new UserModel({
+            name: to,
+            chatboxes: cBox._id,
+          });
+          try {
+            await r.save();
+            console.log("save reciever success");
+          } catch (e) {
+            throw new Error("DB save error: " + e);
+          }
+        }
+        // add user to chat box
+        cBox.users = [s._id, r._id];
+        try {
+          await cBox.save();
+          console.log("save chatbox success");
+        } catch (e) {
+          throw new Error("DB save error: " + e);
+        }
+        // populate chat box
+        await cBox.populate("messages");
+        cBox.populated("messages");
+        await cBox.populate("messages.sender");
+        cBox.populated("messages.sender");
+        // create message array
+        var mesArr = [];
         for (var i = 0; i < cBox.messages.length; i++) {
           cBox.messages[i].populate("sender");
-          mes.push({
+          mesArr.push({
             name: cBox.messages[i].sender.name,
             body: cBox.messages[i].body,
           });
         }
-        // console.log(mes);
-        // send data
-        sendData(["CHAT", mes], ws);
+        sendData(["CHAT", mesArr], ws);
         break;
       }
       case "MESSAGE": {
         const { name, to, body } = payload;
-        console.log(name, to, body);
         const chatBoxName = makeName(name, to);
+        // check if chat Box exist
+        let cBox = await validateBox(chatBoxName);
+        // check if to users exist
         let s = await validateUser(name);
-        const cBox = await validateChatBox(chatBoxName, [name, to]);
+        // create message
         const message = new MessageModel({
           chatBox: cBox._id,
-          sender: a._id,
+          sender: s._id,
           body: body,
         });
         cBox.messages.push(message._id);
         try {
           await message.save();
-          console.log("save success");
+          console.log("save message success");
         } catch (e) {
           throw new Error("Message DB save error: " + e);
         }
         try {
           await cBox.save();
-          console.log("save success");
+          console.log("save chatbox success");
         } catch (e) {
           throw new Error("Message DB save error: " + e);
         }
+        // return data to fontend
         chatBoxes[chatBoxName].forEach((client) => {
           sendData(["MESSAGE", { name: name, body: body }], client);
           sendStatus({ type: "success", msg: "Message sent." }, client);
-          //console.log(client)
         });
         break;
       }
-      // case "clear": {
-      //   Message.deleteMany({}, () => {
-      //     broadcastMessage(["cleared"], {
-      //       type: "info",
-      //       msg: "Message cache cleared",
-      //     });
-      //   });
-      // }
       default:
         break;
     }
-  };
+  },
 };
-
-export {onMessage};
