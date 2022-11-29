@@ -27,6 +27,12 @@ exports.GetCommentsByRestaurantId = async (req, res) => {
     //    message: 'error'
     //    contents: []
     // }
+    const data = await Comment.find({ restaurantId: id });
+    if (data) {
+      res.status(200).send({ message: "success", contents: data });
+    } else {
+      res.status(403).send({ message: "error", contents: [] });
+    }
 }
 
 exports.CreateComment = async (req, res) => {

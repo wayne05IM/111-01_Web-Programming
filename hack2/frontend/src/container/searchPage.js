@@ -20,8 +20,16 @@ const SearchPage = () => {
   const [restaurants, setRestaurant] = useState([]);
   const getRestaurant = async () => {
     // TODO Part I-3-b: get information of restaurants from DB
-    // const parm = axios.get({ params });
-    // useLocation(parm);
+    const result = await instance.get("/getSearch", {
+      params: {
+        priceFilter: state.priceFilter,
+        mealFilter: state.mealFilter,
+        typeFilter: state.typeFilter,
+        sortBy: state.sortBy,
+      },
+    });
+    console.log(result.data);
+    setRestaurant(result.data.contents);
   };
 
   useEffect(() => {
@@ -31,6 +39,7 @@ const SearchPage = () => {
   const navigate = useNavigate();
   const ToRestaurant = (id) => {
     // TODO Part III-1: navigate the user to restaurant page with the corresponding id
+    navigate("/restaurant/" + id);
   };
   const getPrice = (price) => {
     let priceText = "";
@@ -38,31 +47,24 @@ const SearchPage = () => {
     return priceText;
   };
 
+  // onClick={ToRestaurant(item.id)}
   return (
     <div className="searchPageContainer">
       {restaurants.map((item) => (
         // TODO Part I-2: search page front-end
-        <div className="resBlock" id={item.id} key={item.id}>
-          <div className="reslmgContainer">
-            <img className="reslmg" src={item.img} />
+        <div className="resBlock" id={item.id} key={item.id} onClick = {(e) => (ToRestaurant(e.currentTarget.id))}>
+          <div className="resImgContainer">
+            <img className="resImg" src={item.img}/>
           </div>
           <div className="resInfo">
             <div className="title">
               <p className="name"> {item.name} </p>
               <p className="price"> {getPrice(item.price)} </p>
-              <p className="distance"> {string(item.distance / 1000) + " km"} </p>
+              <p className="distance">
+                {JSON.stringify(item.distance / 1000) + " km"}
+              </p>
             </div>
-            <p className="description">
-              {
-                item.tag
-                //    const tag = (item) => {
-                //     for (let i = 0; i < item.tag.length - 1; i++) {
-                //       text += item.tag[i] + ", ";
-                //     }
-                //     text += item.tag[item.tag.length - 1];
-                //     return text;
-              }
-            </p>
+            <p className="description">{item.tag.join(", ")}</p>
           </div>
         </div>
       ))}

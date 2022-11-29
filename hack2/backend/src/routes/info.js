@@ -26,12 +26,13 @@ exports.GetSearch = async (req, res) => {
   //   do `res.status(403).send({ message: 'error', contents: ... })`
 
   // TODO Part I-3-a: find the information to all restaurants
-  // data = await db.collection.find({ condition });
-  // if (data) {
-  //   res.status(200).send({ message: "success", contents: data });
-  // } else {
-  //   res.status(403).send({ message: "error", contents: data });
-  // }
+  const data = await Info.find({});
+  if (data) {
+    // console.log(data);
+    res.status(200).send({ message: "success", contents: data });
+  } else {
+    res.status(403).send({ message: "error", contents: data });
+  }
 
   // TODO Part II-2-a: revise the route so that the result is filtered with priceFilter, mealFilter and typeFilter
   // TODO Part II-2-b: revise the route so that the result is sorted by sortBy
@@ -55,4 +56,10 @@ exports.GetInfo = async (req, res) => {
   // }
 
   // TODO Part III-2: find the information to the restaurant with the id that the user requests
+  const data = await Info.findOne({ id: id });
+  if (data) {
+    res.status(200).send({ message: "success", contents: data });
+  } else {
+    res.status(403).send({ message: "error", contents: [] });
+  }
 };
