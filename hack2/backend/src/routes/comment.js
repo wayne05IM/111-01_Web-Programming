@@ -40,4 +40,6 @@ exports.CreateComment = async (req, res) => {
     const body = req.body
     /****************************************/
     // TODO Part III-3-b: create a new comment to a restaurant
+    // console.log(body);
+    let comment = new Comment(body).save();
 }
