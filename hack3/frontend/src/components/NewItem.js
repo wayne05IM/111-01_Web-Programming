@@ -15,7 +15,7 @@ import { CREATE_ITEM_MUTATION } from '../graphql/mutations';
 function NewItem() {
   const [open, setOpen] = useState(false);
   // TODO 3.2 Evoke the CreateItem Mutation
-  const [createItem] = useMutation(CREATE_ITEM_MUTATION)
+  const [createItem] = useMutation(CREATE_ITEM_MUTATION);
   // TODO 3.2 End
 
   const handleOpen = () => {

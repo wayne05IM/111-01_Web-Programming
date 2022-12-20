@@ -11,7 +11,7 @@ export const CREATE_ITEM_MUTATION = gql`
     $description: String
   ) {
     createItem(
-      input: {
+      input : {
         id: $id
         name: $name
         amount: $amount
@@ -19,7 +19,7 @@ export const CREATE_ITEM_MUTATION = gql`
         date: $date
         description: $description
       }
-    ) {
+    ){
       id
       name
       amount
