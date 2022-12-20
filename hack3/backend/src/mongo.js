@@ -16,10 +16,8 @@ async function connect() {
     }
   )
   .then(async (res) => {
-    if (process.env.MODE === "Reset") {
       console.log("Reset Mode: reset the data");
       dataInit();
-    }
   });
   // TODO 1 End
 }
