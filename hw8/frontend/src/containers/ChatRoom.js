@@ -55,11 +55,6 @@ const ChatRoom = () => {
     msgFooter.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-    setMsgSent(false);
-  }, [msgSent]);
-
   let [getData, { data, loading, subscribeToMore }] =
     useLazyQuery(CHATBOX_QUERY);
 
@@ -168,6 +163,15 @@ const ChatRoom = () => {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    scrollToBottom();
+    setMsgSent(false);
+  }, [msgSent]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatBoxes]);
+
   return (
     <>
       <Title name={me} />
@@ -177,7 +181,9 @@ const ChatRoom = () => {
         activeKey={activeKey}
         onChange={async (key) => {
           setActiveKey(key);
-          const temp = await startChat({ variables: { name1: me, name2: key } });
+          const temp = await startChat({
+            variables: { name1: me, name2: key },
+          });
           setMessages(temp.data.createChatBox.messages);
           await subscribeToMore();
           setSubcriptTrigger(true);
