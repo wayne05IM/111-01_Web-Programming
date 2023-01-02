@@ -29,6 +29,7 @@
 11. localhost 安裝與測試之詳細步驟:  
     backend: (1) cd backend (2) yarn (3) yarn server  
     frontend: (1) cd frontend, yarn add  (2) yarn (3) yarn start  
+    database: Please add "MONGO_URL= mongodb+srv://B09705031:B09705031@cluster0.tl2ptbz.mongodb.net/shadowverse?retryWrites=true&w=majority" in a .env under backend so that the backend can connect to our database.  
 12. 負責項目:  
     B09705030 柯師為 backend, connect backend and frontend  
     B09705031 李奕杰 frontend, connect backend and frontend  
