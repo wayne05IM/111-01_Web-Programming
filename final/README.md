@@ -21,7 +21,7 @@
 7. 其他說明: We deploy backend on Railway, frontend on Vercel.
 8. 使用與參考之框架/模組/原始碼:  
     Frontend: ReactJS, MUI (Material UI), Axios (connect with backend)  
-    Backend: Axios, Restful API (connect with frontend), Mongoose (connect to mongodb)   
+    Backend: Node JS, Axios, Restful API (connect with frontend), Mongoose (connect to mongodb)   
 9. 使用之第三方套件、框架、程式碼: 從零開始並參考網服課程所學內容及一些教學寫成  
 10. 專題製作心得: 
     原本，網頁設計似乎是一門遙遠且高深莫測的技術，在經過一學期對於前端、後端及資料庫等領域的了解後，我們決定期末專題要實作一個卡牌遊戲 shadowverse 的資訊管理網站。隨著專案內容的推進，前端、後端的逐漸成形，整門課程的所學也一點一滴地融於其中。期末專案有如這個學期的集大成，我們從零到有生出這個專案，其中包括了我們的心血，也是對於自己網頁程式能力的證明。曾幾何時，網頁設計已不是難以理解的無字天書，而是一項充滿自由、創意及巧思的創作過程。期末專案並不是句號，而是一個逗號，網路技術的發展日新月異，我們只需不斷精進，相信在不久的將來，我們的程式設計能力將會更進一步。在團隊合作過程中，發現負責前端與後端組員間互相溝通需要的功能，與如何在寫完後順利接在一起，需要組員間充分討論、理解與對服務內容、socket 的深入了解。做完這次專題發現如何溝通、理解組員想法是一件非常重要事。最後，我們也深信此期末專題未來能有很廣泛的應用，任何卡牌遊戲或資源管理、分享的專案只要調整資料內容與欄位都能透過我們期末專題的架構實現成非常實用、清楚的網頁版管理、分享介面。  
@@ -29,7 +29,8 @@
 11. localhost 安裝與測試之詳細步驟:  
     backend: (1) cd backend (2) yarn  (3) yarn server  
     frontend: (1) cd frontend (2) yarn (3) yarn start  
-    database: Please add "MONGO_URL= mongodb+srv://B09705031:B09705031@cluster0.tl2ptbz.mongodb.net/shadowverse?retryWrites=true&w=majority" in a .env under backend folder so that the backend can connect to our database.  
+    database: Please add "MONGO_URL= mongodb+srv://B09705031:B09705031@cluster0.tl2ptbz.mongodb.net/shadowverse?retryWrites=true&w=majority" in a .env under backend folder so that the backend can connect to our database. 
+    login: 麻煩測試者在 login 介面註冊一個帳號再行登入如影片介紹內容操作  
 12. 負責項目:  
     B09705030 柯師為 backend, connect backend and frontend  
     B09705031 李奕杰 frontend, connect backend and frontend  
