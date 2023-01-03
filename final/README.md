@@ -2,7 +2,7 @@
 
 [111-1] Web Programming Final  
 1. 專題題目名稱: (Group 13) Shadowverse Toolbox  
-2. Demo 影片連結: 
+2. Demo 影片連結: https://www.youtube.com/watch?v=zj_nVz2lCFA
 3. 描述這個服務在做什麼: 
     為卡牌遊戲 shadowverse 的玩家提供一個查詢及分享資訊的平台，功能包括卡片圖鑑、牌組分享及攻略文章查詢等  
 4. Deployed 連結: https://shadowverse-tool-box.vercel.app  
