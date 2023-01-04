@@ -18,7 +18,10 @@
     分享牌組的畫面會根據所選的職業顯示出可編入的卡片，再讓用戶依此將卡牌加入牌組中。
     撰寫文章方面則是會要求輸入標題及內容後發布。
 6. Github link: https://github.com/sky456757/shadowverse-toolBox  
-7. 其他說明: We deploy backend on Railway, frontend on Vercel.
+7. 其他說明: We deploy backend on Railway, frontend on Vercel.  
+    目前沒有支援手機尺寸的介面，麻煩使用電腦網頁開啟。  
+    目前 backend deploy 只能開到 2023/01/20，如果日後有需要使用請再聯繫我們，謝謝！  
+
 8. 使用與參考之框架/模組/原始碼:  
     Frontend: ReactJS, MUI (Material UI), Axios (connect with backend)  
     Backend: Node JS, Axios, Restful API (connect with frontend), Mongoose (connect to mongodb)   
